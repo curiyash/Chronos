@@ -5,7 +5,7 @@ const app = express();
 
 const cors = require('cors');
 app.use(cors({
-    origin: ['https://getpocket.com', 'https://www.google.com/']
+    origin: ['*']
 }));
 
 app.use(express.static(path.join(__dirname, 'public')))

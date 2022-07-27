@@ -1,0 +1,4 @@
+1) The idea is to make merge sort online
+2) Sort and keep the sorted array in the database
+3) When a new batch arrives, sort it using merge sort
+4) Then simply merge the 2 arrays

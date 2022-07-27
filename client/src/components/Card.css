@@ -1,0 +1,52 @@
+.card{
+    padding: 10px 10px;
+    width: 296px;
+    height: auto;
+    font-family: 'Lato', sans-serif;
+    position: relative;
+}
+
+.grid{
+    display: grid;
+}
+
+.grid-item{
+    display: inline-grid;
+}
+
+.img img{
+    height: 200px;
+    width: 296px;
+    object-fit: cover;
+}
+
+.btn{
+    display: block;
+}
+
+.title{
+    text-overflow: ellipsis;
+}
+
+.meta{
+    bottom: 0px;
+    left: 0px;
+    margin-top: 42px;
+    padding: 2px 2px;
+    flex: 1;
+}
+
+.container{
+    display: flex;
+}
+
+.time{
+    font-size: 42px;
+    right: 0;
+}
+
+.time h2{
+    margin-bottom: 0px;
+    margin-top: 0px;
+    padding: 2px 2px;
+}

@@ -1,31 +1,43 @@
-.card{
-    padding: 10px 10px;
-    width: 296px;
+.card-chronos{
+    padding: 1% 1%;
+    width: 30%;
     height: auto;
     font-family: 'Lato', sans-serif;
     position: relative;
+    max-width: 320px;
+    min-width: 270px;
 }
 
-.grid{
+.grid-chronos{
     display: grid;
 }
 
-.grid-item{
+.grid-item-chronos{
     display: inline-grid;
 }
 
 .img img{
     height: 200px;
-    width: 296px;
+    width: 100%;
     object-fit: cover;
 }
 
-.btn{
-    display: block;
+.btn-chronos{
+    display: inline;
+}
+
+.under-test{
+    display: flex;
+    justify-content: left;
+    flex-wrap: wrap;
 }
 
 .title{
     text-overflow: ellipsis;
+}
+
+.container-chronos{
+    display: flex;
 }
 
 .meta{
@@ -34,10 +46,6 @@
     margin-top: 42px;
     padding: 2px 2px;
     flex: 1;
-}
-
-.container{
-    display: flex;
 }
 
 .time{

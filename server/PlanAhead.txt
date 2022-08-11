@@ -1,0 +1,16 @@
+1) We need the JSON file from Pocket
+Everytime? Possibly, how will I know the items that have been deleted? -> I'll have to sync with Pocket
+So, certainly I cannot bog servers for this, right?
+I'll have to bog the client-side JS
+Server will be used for doing CRUD on MongoDB maybe
+Alright, so I wouldn't need the JSON file again and again. It's a one time deal
+Using it internally seems the way to go
+I could possibly use Firebase, but there's only a use of it if I use it
+
+2) For sorting, we could just do a quick Pocket API call. They have done as far as we need
+
+3) Get on the idea of reminding users of articles instead of users reminding themselves
+Include a surprise me option
+
+4) status: 2 in article JSON indicates that it is deleted
+status 0: means added/modified

@@ -1,23 +1,35 @@
 import React, { useState } from "react";
 import { useEffect } from "react";
-import { useNavigate, useLocation } from "react-router";
-import { useParams } from "react-router-dom";
 import MetaTags from 'react-meta-tags';
 import "./Card.css"
+import Input from '@mui/material/Input';
 
-import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import Dialog from '@mui/material/Dialog';
 import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
 import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
-import FormControl from '@mui/material/FormControl';
-import FormControlLabel from '@mui/material/FormControlLabel';
-import InputLabel from '@mui/material/InputLabel';
-import MenuItem from '@mui/material/MenuItem';
-import Select from '@mui/material/Select';
-import Switch from '@mui/material/Switch';
+import AspectRatio from '@mui/joy/AspectRatio';
+import Box2 from '@mui/joy/Box';
+import Button2 from '@mui/joy/Button';
+// import Card from '@mui/joy/Card';
+import IconButton from '@mui/joy/IconButton';
+// import Typography from '@mui/joy/Typography';
+
+import { useNavigate, useLocation } from "react-router";
+import { useParams } from "react-router-dom";
+import MUICard from '@mui/material/Card';
+import CardContent from '@mui/material/CardContent';
+import CardMedia from '@mui/material/CardMedia';
+import { CardActionArea, Grid, Stack } from '@mui/material';
+import Divider from '@mui/material/Divider';
+import DeleteIcon from '@mui/icons-material/Delete';
+import AddIcon from '@mui/icons-material/Add';
+import InventoryIcon from '@mui/icons-material/Inventory';
+import MoreIcon from '@mui/icons-material/More';
+import Typography from '@mui/material/Typography';
+import ShuffleIcon from '@mui/icons-material/Shuffle';
 
 function MaxWidthDialog(props) {
   const [dialogCards, setDialogCards] = useState([]);
@@ -49,14 +61,14 @@ function MaxWidthDialog(props) {
             open={true}
             onClose={handleClose}
           >
-            <DialogTitle>This is the Title</DialogTitle>
+            <DialogTitle>Articles of the same Duration</DialogTitle>
             <DialogContent>
               <DialogContentText>
-                Our content
+                These articles represent alternatives to the articles of same duration
               </DialogContentText>
-            <div className="under-test">
+            <Grid container spacing={2}>
                 {props.cardList(dialogCards, 'dialog')}
-            </div>
+            </Grid>
             </DialogContent>
             <DialogActions>
               <Button onClick={handleClose}>Close</Button>
@@ -83,7 +95,7 @@ const style = {
   };
 
 var length = 0;
-let weight = 20;
+// let weight = 42;
 
 // Online Merge Sort
 // This function should only be called when the user joins for the first time
@@ -164,55 +176,32 @@ function sortArticles(jsonData){
 //     merge(sortedJSONData, newBatch);
 // }
 
-function Card(props){
-    // Card has properties such as
-        // resolved_url
-        // resolved_title
-        // image
-        // Link to original article
-        // Link to read on Pocket
-        // Domain Metadata
-    // Expected return structure
-    // Like Pocket, Image -> Title with Original URL -> Name of provider -> Time to read -> Link to pocket
-    if (props.which==="normal"){
-        return(
-            <div className="card-chronos grid-chronos grid-item-chronos">
-                <div className="img">
-                    <img src={props.image}></img>
-                </div>
-                <div className="title">
-                    <a href={props.resolved_url}>{props.resolved_title}</a>
-                </div>
-                <div className="container-chronos">
-                    <div className="meta">
-                        <h3>{props.name}</h3>
-                        <button onClick={event => props.setDialog(props.time)}>More</button>
-                    </div>
-                    <div className="time">
-                        <h2>{props.time}</h2>
-                    </div>
-                </div>
-            </div>  
-        );
+function MetaData(props){
+    console.log(props.domainMetaData);
+    const style = {
+        textTransform: "none",
+        boxShadow: "none", 
+        borderRadius: "21px", 
+        borderColor: "black", 
+        backgroundColor: "#fce2c4",
+        color: "black",
+        padding: "0 10px",
+    }
+    if (props.domainMetaData!==null){
+        return (
+            <div className="meta">
+                {/* <Button variant="outlined" sx={style}>{props.domainMetaData.name}</Button> */}
+                <a href={props.resolved_url} className="card-link">{props.domainMetaData.name}</a>
+            </div>
+        )
     } else{
-        return(
-            <div className="card-chronos grid-chronos grid-item-chronos">
-                <div className="img">
-                    <img src={props.image}></img>
-                </div>
-                <div className="title">
-                    <a href={props.resolved_url}>{props.resolved_title}</a>
-                </div>
-                <div className="container-chronos">
-                    <div className="meta">
-                        <h3>{props.name}</h3>
-                    </div>
-                    <div className="time">
-                        <h2>{props.time}</h2>
-                    </div>
-                </div>
-            </div>  
-        );
+        let domain = (new URL(props.resolved_url));
+        domain = domain.hostname.replace('www.','');
+        return (
+            <div className="meta">
+                <a href={props.resolved_url} className="card-link">{domain}</a>
+            </div>
+        )
     }
 }
 
@@ -225,7 +214,7 @@ function max(a, b){
 }
 
 // Most articles and Most Time Utilization
-function MostMost(sortedJSONData){
+function MostMost(sortedJSONData, weight){
     var largest = 0;
     var most = 0;
     let mostmost = [];
@@ -262,7 +251,7 @@ function MostMost(sortedJSONData){
     return mostmost;
 }
 
-function LeastMost2(sortedJSONData){
+function LeastMost2(sortedJSONData, weight){
     var largest = 0;
     var most = 0;
     let leastmost = [];
@@ -299,11 +288,7 @@ function LeastMost2(sortedJSONData){
     return leastmost;
 }
 
-// var largest = 0;
-// var most= 0;
-
-// Most # and Least t
-function MostLeast(sortedJSONData){
+function MostLeast(sortedJSONData, weight){
     let sum = 0;
     let t = [];
     for (const time of sortedJSONData){
@@ -319,7 +304,7 @@ function MostLeast(sortedJSONData){
     return t;
 }
 
-function LeastMost(sortedJSONData){
+function LeastMost(sortedJSONData, weight){
     let sum = 0;
     let t = [];
     let flag = 0;
@@ -339,7 +324,7 @@ function LeastMost(sortedJSONData){
     return t;
 }
 
-function NullMost(sortedJSONData){
+function NullMost(sortedJSONData, weight){
     var weights = [];
     let time;
     let id;
@@ -402,7 +387,7 @@ function NullMost(sortedJSONData){
     return list;
 }
 
-function MostNull(sortedJSONData){
+function MostNull(sortedJSONData, weight){
     var weights = [];
     let time;
     let id;
@@ -465,51 +450,9 @@ function MostNull(sortedJSONData){
     return list;
 }
 
-function tell(items, keys, pos, weight, nums, times, maxi, numArts, capWeight, capArts){
-    if (pos<0 || weight==0){
-        if (weight==capWeight){
-            console.log(nums);
-            console.log(times);
-            console.log("\n");
-        }
-        maxi = Math.max(maxi, numArts);
-        return 0;
-    }
-    let value = keys[pos];
-    let maxWeight = items[keys[pos]];
-    let prevNums = nums.slice();
-    let prevTimes = times.slice();
-    for (let i=0; i<=maxWeight; i++){
-        if (value*i<=weight){
-            nums.push(value);
-            times.push(i);
-            tell(items, keys, pos-1, weight-value*i, nums, times, maxi, numArts+1*i, capWeight, capArts);
-            nums = prevNums.slice();
-            times = prevTimes.slice();
-        } else{
-            break;
-        }
-    }
-}
-
-function pick(items, keys, pos, weight){
-    if (pos<0 || weight==0){
-        return 0;
-    }
-    let value = keys[pos];
-    let maxWeight = items[keys[pos]];
-    let ans = 0;
-    for (let i=0; i<=maxWeight; i++){
-        if (value*i<=weight){
-            ans = Math.max(pick(items, keys, pos-1, weight-value*i));
-        } else{
-            break;
-        }
-    }
-    return ans;
-}
-
-function unboundedKnapsack(sortedJSONData){
+function boundedKnapsack(sortedJSONData, timeOrNum, wgt){
+    // var weight = wgt;
+    // let weight = 30;
     var items = {};
     let time;
     let id;
@@ -518,6 +461,7 @@ function unboundedKnapsack(sortedJSONData){
     var parNums = [];
     var times = [];
     var maxi = 0;
+    console.log(`Hello Weight: ${wgt}`);
     for (const prop in sortedJSONData){
         time = sortedJSONData[prop].time;
         id = sortedJSONData[prop].item_id;
@@ -535,13 +479,19 @@ function unboundedKnapsack(sortedJSONData){
         }
     }
     var numArts = 0;
-    var table = new Array(len+1).fill(null).map(() => Array(weight+1).fill(0));
+    var table = new Array(len+1).fill(null).map(() => Array(wgt+1).fill(0));
     let keys = Object.keys(items);
     keys.map((time, i) => {
-        for (let j=1; j<weight+1; j++){
+        let mul = 1;
+        if (timeOrNum===1){
+            mul = time;
+        }
+        console.table(table);
+        for (let j=1; j<wgt+1; j++){
             for (let k=0; k<=items[time]; k++){
                 if (j>=time*k){
-                    table[i+1][j] = Math.max(table[i+1][j], 1*k+table[i][j-time*k]);
+                    table[i+1][j] = Math.max(table[i+1][j], mul*k+table[i][j-time*k]);
+                    // table[i+1][j] = Math.max(table[i+1][j], time*k+table[i][j-time*k]);
                 } else{
                     break;
                 }
@@ -556,18 +506,29 @@ function unboundedKnapsack(sortedJSONData){
         let maxi = 0;
         let maxK = 0;
         for (let k=0; k<=items[keys[i-1]]; k++){
+            let mul = 1;
+            if (timeOrNum===1){
+                mul = keys[i-1];
+            }
             if (j>=keys[i-1]*k){
-                if (1*k+table[i-1][j-keys[i-1]*k]>maxi){
+                if (mul*k+table[i-1][j-keys[i-1]*k]>maxi){
+                // if (keys[i-1]*k+table[i-1][j-keys[i-1]*k]>maxi){
                     // maxK = Math.max(maxK, k);
-                    maxi = 1*k+table[i-1][j-keys[i-1]*k];
+                    maxi = mul*k+table[i-1][j-keys[i-1]*k];
+                    // maxi = keys[i-1]*k+table[i-1][j-keys[i-1]*k];
                 }
             } else{
                 break;
             }
         }
         for (let k=0; k<=items[keys[i-1]]; k++){
+            let mul = 1;
+            if (timeOrNum===1){
+                mul = keys[i-1];
+            }
             if (j>=keys[i-1]*k){
-                if (1*k+table[i-1][j-keys[i-1]*k]==maxi){
+                if (mul*k+table[i-1][j-keys[i-1]*k]==maxi){
+                // if (keys[i-1]*k+table[i-1][j-keys[i-1]*k]==maxi){
                     if (k!==0){
                         let key = keys[i-1];
                         nums.push({
@@ -586,36 +547,28 @@ function unboundedKnapsack(sortedJSONData){
         }
     }
     let i = len;
-    let j = weight;
+    let j = wgt;
     Backtrack(i, j, nums, times);
     console.table(table);
     console.log(parNums);
     return parNums;
 }
 
-function Retrieve(){
-    // First make a call to the database to check if the user is present
-    // If yes, then get the since, count, offset
-    // Then make the request
-    // After making the request, certain things will be updated
-    // Delete the items not present anymore
-    // Update the items present
-    // Sort the items to be added by time
-    // Merge with items from database
-
-    // If user is not present, fetch the whole Pocket data
-    // Note since, count, offset
-    // Sort the data as per time
-    // Store it under username
-}
-
 function DisplayCards(){
+    const [weight, setWeight] = useState(0);
+
+    function onWeightChange(e){
+        console.log(e.target.value);
+        setWeight(Number(e.target.value));
+    }
+
     let location = useLocation();
     let access_token = location.state.access_token;
     let username = location.state.username;
     const [cards, setCards] = useState([]);
     const [dc, setDC] = useState([]);
     const [dl, setDL] = useState([]);
+    const [index, setIndex] = useState(0);
     const [total, setTotal] = useState(0);
     const [numArticles, setNumArticles] = useState(0);
     const [timeObj, setTimeObj] = useState({});
@@ -628,10 +581,6 @@ function DisplayCards(){
     let item_id;
     let timeToRead;
     let newCard;
-    const [
-        show,
-        setShow
-    ] = useState(false);
 
     useEffect(()=>{
         GetIt();
@@ -643,33 +592,58 @@ function DisplayCards(){
         setOpen(true);
     }
 
+    function cardList(what, which){
+        console.log(what);
+        return what.map((card) => {
+            return (
+                <Grid item xs={12} sm={6} md={4} lg={3} xl={3}>
+                    <Card
+                        resolved_title={card.resolved_title}
+                        resolved_url={card.resolved_url}
+                        image={card.image}
+                        time={card.time}
+                        setDialog={setDialog}
+                        which = {which}
+                        domainMetaData={card.domainMetaData}
+                        excerpt={card.excerpt}
+                        pocketRead={card.pocketRead}
+                    />
+                </Grid>
+            );
+          });
+    };
+
     async function getArticles(){
         await fetch(`http://localhost:5000/retrieve?access_token=${access_token}&username=${username}`)
         .then(response => response.json())
         .then(data => {
-            // const a = document.createElement("a");
-            // data = JSON.stringify(data);
-            // const file = new Blob([data], {type: "application/json"});
-            // a.href = URL.createObjectURL(file);
-            // a.download = "test.json";
-            // a.click();
+            console.log(data);
             for (const property in data["list"]) {
                 resolved_url = data["list"][property]["resolved_url"]
                 resolved_title = data["list"][property]["resolved_title"]
+                const excerpt = data["list"][property]["excerpt"]
                 image = data["list"][property]["top_image_url"]
                 item_id = data["list"][property]["item_id"]
                 timeToRead = data["list"][property]["time_to_read"]
+                let domainMetaData = null;
+                if ("domain_metadata" in data["list"][property]){
+                    // Contains name and logo
+                    domainMetaData = data["list"][property]["domain_metadata"];
+                }
                 newCard = {
                     "resolved_url": resolved_url,
                     "resolved_title": resolved_title,
                     "image": image,
-                    "name": "Yash",
+                    "domainMetaData": domainMetaData,
                     "time": timeToRead,
                     "item_id": item_id,
                     "count": 0,
+                    "chosen": 0,
+                    "excerpt": excerpt,
+                    "pocketRead": property,
                 }
                 if (timeObj.hasOwnProperty(timeToRead)){
-                    timeObj[timeToRead].push(newCard);   
+                    timeObj[timeToRead].push(newCard);
                 } else{
                     timeObj[timeToRead] = [newCard];
                 }
@@ -695,34 +669,6 @@ function DisplayCards(){
         })
     }
 
-    // function TheTimeKeeper(){
-    //     if (timeObj.length!==0){
-    //     }
-    // }
-    const addObjectToArray = card => {
-        setCards(current => [...current, card]);
-    };
-    
-    // function reader(){
-    //     for (const property in jsonData["list"]) {
-    //         resolved_url = jsonData["list"][property]["resolved_url"]
-    //         resolved_title = jsonData["list"][property]["resolved_title"]
-    //         image = jsonData["list"][property]["top_image_url"]
-    //         item_id = jsonData["list"][property]["item_id"]
-    //         timeToRead = jsonData["list"][property]["time_to_read"]
-    //         newCard = {
-    //             "resolved_url": resolved_url,
-    //             "resolved_title": resolved_title,
-    //             "image": image,
-    //             "name": "Yash",
-    //             "time": timeToRead,
-    //             "item_id": item_id,
-    //         }
-    //         cards.push(newCard);
-    //     }
-    //     // setRead(true);
-    // }
-
     function mapUnbounded(res){
         let ret = []
         console.log(res);
@@ -738,16 +684,19 @@ function DisplayCards(){
         return ret;
     }
 
-    function LeastMostClicked(){
+    function LeastMostClicked(timeOrNum, weight){
         setDL([]);
         setDC([]);
-        let res = unboundedKnapsack(sortedData);
+        let res = boundedKnapsack(sortedData, timeOrNum, weight);
         let ret = mapUnbounded(res);
+        let length = 0;
         ret.forEach((item) => {
             setDL((prev) => {
                 return [...prev, item];
             });
+            length++;
         })
+
         // let res = LeastMost(sortedData);
         // res.forEach((item) => {
         //     setDC((prev) => {
@@ -813,7 +762,8 @@ function DisplayCards(){
 
     function justDoIt(list){
         setDC([]);
-        // console.log(list);
+        console.log(list);
+        setIndex(index+1);
         list.forEach((item) => {
             setDC((prev) => {
                 return [...prev, ...cards.filter((card)=>{
@@ -823,12 +773,22 @@ function DisplayCards(){
         })
     }
 
-    function multiList(){
-        return dl.map((list, index) => {
+    function MultiList(){
+        let list;
+        list = dl[index];
+        
+        useEffect(() => {
+            if (index===dl.length){
+                setIndex(0);
+            }
+        }, []);
+        if (index!==dl.length){
             return (
-                <button className="btn-chronos" onClick={event => justDoIt(list)}>{index}</button>
+                <Button className="shuffle" onClick={event => justDoIt(list)}>
+                    <ShuffleIcon className="option-text"></ShuffleIcon>
+                </Button>
             )
-        })
+        }
     }
 
     function justCountIt(){
@@ -846,52 +806,136 @@ function DisplayCards(){
         justCountIt();
     }, [dc]);
 
-    function cardList(what, which){
-        return what.map((card) => {
-            return (
-                <Card
-                    resolved_title={card.resolved_title}
-                    resolved_url={card.resolved_url}
-                    image={card.image}
-                    time={card.time}
-                    name={card.name}
-                    setDialog={setDialog}
-                    which = {which}
-                />
-            );
-          });
-    };
+    function Card(props){
+        return (
+            <MUICard className="mui-card" sx={{ maxHeight: 420, overflow: "scroll", scrollbarWidth: "none" }}>
+                <CardActionArea>
+                    <a href={`https://getpocket.com/read/${props.pocketRead}`} target="blank">
+                        <CardMedia
+                            component="img"
+                            height="210"
+                            image={props.image}
+                            alt={props.resolved_title}
+                        />
+                    </a>
+                </CardActionArea>
+                <CardActionArea>
+                    <Stack 
+                        direction="row" 
+                        sx={{width: "100%"}}
+                        divider={<Divider orientation="vertical" flexItem />}
+                        alignItems={"center"}
+                        justifyContent={"space-evenly"}>
+                            <Button className="meta-icon-btn"><AddIcon className="meta-icon"/></Button>
+                            <Button className="meta-icon-btn"><InventoryIcon className="meta-icon" onClick={(e) => {doThing("archive", props.pocketRead)}}/></Button>
+                            <Button className="meta-icon-btn" onClick={(e) => {doThing("delete", props.pocketRead)}}><DeleteIcon className="meta-icon"/></Button>
+                            <Button className="meta-icon-btn" onClick={(event) => {props.setDialog(props.time)}}><MoreIcon className="meta-icon"/></Button>
+                    </Stack>
+                </CardActionArea>
+                <CardActionArea sx={{position: "relative"}}>
+                    <CardContent sx={{ paddingBottom: "0" }}>
+                        <h3><a className="card-title" href={props.resolved_url} target="blank">{props.resolved_title}</a></h3>
+                    </CardContent>
+                    <CardContent>
+                        {props.excerpt}
+                    </CardContent>
+                    <Stack 
+                        direction="row"
+                        alignItems={"baseline"}
+                        justifyContent={"space-between"}
+                        sx={{ paddingBottom: "0", paddingLeft: "16px", paddingRight: "16px", backgroundColor: "#e3f2fd", width: "100%", position: "sticky", bottom: "0" }}    
+                    >
+                        <MetaData domainMetaData={props.domainMetaData} resolved_url={props.resolved_url}/>
+                        <h1 className="time">{props.time}</h1>
+                    </Stack>
+                </CardActionArea>
+            </MUICard>
+        )
+    }
+
+    function doThing(thing, item_id){
+        const data = [
+            {
+                "action": thing,
+                "item_id": item_id,
+            }
+        ]
+        const json = encodeURIComponent(JSON.stringify(data));
+        async function sendReq(){
+            await fetch('http://localhost:5000/dothing', {
+                method: 'POST',
+                mode: 'cors',
+                cache: 'no-cache',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    access_token: access_token,
+                    json: json,
+                })
+            })
+            .then(function (response) {
+                console.log(response);
+            })
+            .catch(function (error) {
+                console.log(error);
+            });
+        }
+        sendReq();
+        setDC(() => {
+            return [...dc.filter((card)=>{
+                return card.item_id!==item_id;
+            })];
+        })
+    }
 
     return (
         <div>
-            {/* <MetaTags>
-            <link rel="preconnect" href="https://fonts.googleapis.com"></link>
-            <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin></link>
-            <link href="https://fonts.googleapis.com/css2?family=Dancing+Script&family=Lato&display=swap" rel="stylesheet"></link>
-            </MetaTags> */}
             <div className="main">
                 <div>
-                    <button className="btnChronos" onClick={LeastMostClicked}>LeastMost</button>
-                    <button className="btnChronos" onClick={MostLeastClicked}>MostLeast</button>
-                    <button className="btnChronos" onClick={MostMostClicked}>MostMost</button>
-                    <button className="btnChronos" onClick={MostNullClicked}>MostNull</button>
-                    <button className="btnChronos" onClick={NullMostClicked}>NullMost</button>
-                    <button className="btnChronos" onClick={LeastMost2Clicked}>LeastMost2</button>
-                    <p>{`Total: ${total}`}</p>
-                    <p>{`Num: ${numArticles}`}</p>
-                    <div>
-                        {ohHowTheTimesChange()}
-                    </div>
-                    <div>
-                        {multiList()}
-                    </div>
-                    {cardList(dc, 'normal')}
+                    <form style={{display: "flex", justifyContent: "center"}}>
+                        <label className="labelElem">
+                            <span className="inputText">Today I would like to read for </span>
+                            <input id="inputWeight" onChange={onWeightChange}></input>
+                            <span className="inputText">minutes</span>
+                        </label>
+                    </form>
                 </div>
             </div>
-            <h1>Hello</h1>
+            <Stack direction="row" spacing={2} alignItems={"center"} justifyContent={"space-evenly"} sx={{ paddingTop: "42px"}}>
+                        <Button variant="contained" className="option-btn" onClick={(e) => {LeastMostClicked(1, weight)}}><Typography className="option-text">Most time</Typography></Button>
+                        <Button variant="contained" className="option-btn" onClick={(e) => {LeastMostClicked(0, weight)}}><Typography className="option-text">Most articles</Typography></Button>
+            </Stack>
+            <div >
+                <MultiList />
+            </div>
+            <Grid container spacing={4} sx={{width: "100%" }}>
+                {cardList(dc, 'normal')}
+            </Grid>
             <MaxWidthDialog open={open} setOpen={setOpen} cardList={cardList} timeObj={timeObj} time={time}/>
         </div>
     );
 }
 
 export default DisplayCards;
+
+
+                    {/* <Button>Hello</Button> */}
+                    {/* <button className="btnChronos" onClick={LeastMostClicked}>LeastMost</button> */}
+                    {/* <button className="btnChronos" onClick={MostLeastClicked}>MostLeast</button> */}
+                    {/* <button className="btnChronos" onClick={MostMostClicked}>MostMost</button> */}
+                    {/* <button className="btnChronos" onClick={MostNullClicked}>MostNull</button> */}
+                    {/* <button className="btnChronos" onClick={NullMostClicked}>NullMost</button> */}
+                    {/* <button className="btnChronos" onClick={LeastMost2Clicked}>LeastMost2</button> */}
+                    {/* <button className="btnChronos" onClick={UpdateReadList()}>Add to Readlist</button> */}
+                    {/* <Stack 
+                        direction="row"
+                        alignItems={"center"}
+                        justifyContent={"space-evenly"}
+                    >
+                        <h4>Total time to Read <Typography sx={{backgroundColor: "#003754", color: "#fff", textAlign: "center"}}><h2>{`${total}`}</h2></Typography></h4>
+                        <h4>Number of Articles <Typography sx={{backgroundColor: "#003754", color: "#fff", textAlign: "center"}}><h2>{`${numArticles}`}</h2></Typography></h4>
+                    </Stack> */}
+                    {/* <div>
+                        {ohHowTheTimesChange()}
+                    </div> */}

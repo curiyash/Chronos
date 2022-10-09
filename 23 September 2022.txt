@@ -1,0 +1,16 @@
+look into localstorage and sessionstorage - for retrieval of articles using since
+Add to archive and delete features
+
+State of the project
+--------------------
+The project I want is a bit complicated and would take a lot
+of time. Instead, a minimalistic version can be made. Where,
+you just ask for the user input on the number of articles to be read
+Give the random options. Set a default method for the articles
+that is, delete or archive after use or none. There should be
+a delete and archive icon similar to Pocket
+Need to mention the provider of content below. Link image to
+Pocket's reader and the tet to actual link to the website
+Add a open all in new tab feature
+Make separate section for unread, archived and favorites
+Allow the methods to be used on each individual of them

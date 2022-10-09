@@ -1,3 +1,4 @@
+@import url('https://fonts.googleapis.com/css2?family=Bilbo&family=Luckiest+Guy&display=swap');
 .card-chronos{
     padding: 1% 1%;
     width: 30%;
@@ -6,6 +7,56 @@
     position: relative;
     max-width: 320px;
     min-width: 270px;
+}
+
+.inputText {
+    font-size: xx-large;
+}
+
+#inputWeight {
+    width: 64px;
+    height: 42px;
+    font-size: xx-large;
+    margin: 0 1vw;
+    text-align: center;
+}
+
+.options {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: 2vw;
+}
+
+@media screen and (max-width: 1000px) {
+    .inputText {
+        font-size: x-large;
+    }
+
+    #inputWeight {
+        width: 60px;
+        height: 36px;
+        font-size: x-large;
+        margin: 0 1vw;
+    }
+}
+
+@media screen and (max-width: 720px) {
+    .inputText {
+        font-size: large;
+    }
+
+    #inputWeight {
+        width: 42px;
+        height: 24px;
+        font-size: large;
+        margin: 0 1vw;
+    }
+}
+
+.labelElem {
+    display: flex;
+    align-items: center;
 }
 
 .grid-chronos{
@@ -24,6 +75,12 @@
 
 .btn-chronos{
     display: inline;
+    margin: 0 2vw !important;
+    font-family: 'Lato', 'sans-serif' !important;
+    font-size: x-large !important;
+    text-transform: none !important;
+    background-color: #FDEEDC !important;
+    color: #F1A661 !important;
 }
 
 .under-test{
@@ -38,9 +95,15 @@
 
 .container-chronos{
     display: flex;
+    align-items: baseline;
 }
 
-.meta{
+.meta {
+    margin-top: 42px;
+    flex: 1 1;
+}
+
+.card-footer{
     bottom: 0px;
     left: 0px;
     margin-top: 42px;
@@ -49,12 +112,107 @@
 }
 
 .time{
-    font-size: 42px;
     right: 0;
+    font-size: xxx-large;
 }
 
 .time h2{
     margin-bottom: 0px;
     margin-top: 0px;
     padding: 2px 2px;
+}
+
+.provider {
+    text-transform: "none";
+    box-shadow: "none"; 
+    border-radius: "21px"; 
+    border-color: "black"; 
+    background-color: "#fce2c4";
+    color: "black";
+    padding: "0 4px";
+}
+
+.logo {
+    width: 5vh
+}
+
+.mui-card::-webkit-scrollbar{
+    display: none;
+}
+
+.card-title {
+    text-decoration: none;
+    color: #212529;
+}
+
+.card-link {
+    text-decoration: none;
+    color: #212529;
+}
+
+.card-link:hover {
+    text-decoration: underline;
+}
+
+.meta-icon {
+    color: #ffa6a7;
+}
+
+.meta-icon-btn {
+    width: 100%;
+}
+
+.meta-icon-btn:hover{
+    background-color: rgb(242, 100, 100) !important;
+    color: white;
+}
+
+.meta-icon-btn:hover .meta-icon{
+    color: white;
+}
+
+.option-text {
+    color: #fd6265;
+}
+
+.option-btn {
+    background-color: white !important;
+    border-style: solid !important;
+    border-color: #fd6265 !important;
+    border-width: 1px !important;
+    box-shadow: none !important;
+    text-transform: none !important;
+    font-size: xx-large !important;
+    width: 42%;
+}
+
+.option-btn:hover{
+    background-color: rgb(242, 100, 100) !important;
+    color: white;
+}
+
+.option-btn:hover .option-text{
+    color: white;
+}
+
+.shuffle {
+    background-color: white !important;
+    border-style: solid !important;
+    border-color: #fd6265 !important;
+    border-width: 1px !important;
+    box-shadow: none !important;
+    text-transform: none !important;
+    font-size: xx-large !important;
+    margin-top: 42px !important;
+    margin-left: auto !important;
+    margin-bottom: 21px !important;
+}
+
+.shuffle:hover{
+    background-color: rgb(242, 100, 100) !important;
+    color: white;
+}
+
+.shuffle:hover .option-text{
+    color: white;
 }

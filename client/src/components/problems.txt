@@ -1,0 +1,8 @@
+23 September 2022
+-----------------
+1) Losing weight as a global variable and making it a local variable
+This caused the code to break for boundedKnapsack. I don't get what the problem is.
+Let's reset the weight to global and try again
+-> It works
+What could be the issue?
+The Problem was addition of weight to a number. Weight is a string and not a number

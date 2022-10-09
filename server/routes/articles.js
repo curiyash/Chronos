@@ -8,7 +8,7 @@ var req_tok;
 recordRoutes.route('/').get((req, res) => {
     console.log("I've been called");
     async function callIt(){
-        const resp = await axios.post('https://getpocket.com/v3/oauth/request?consumer_key=102894-ac9c50b12080d1f4d69a0de&redirect_uri=localhost/5000', {
+        const resp = await axios.post('https://getpocket.com/v3/oauth/request?consumer_key=104112-346f4c78b76e2ef1fb2bc80&redirect_uri=localhost/5000', {
             headers: {
                 "Content-Type": "application/json; charset=UTF-8",
                 "X-Accept": "application/json",
@@ -35,7 +35,7 @@ recordRoutes.route('/redirect').get((req, res) => {
     console.log("Who called me?");
     console.log(reqToken);
     async function callIt(){
-        await axios.post(`https://getpocket.com/v3/oauth/authorize?consumer_key=102894-ac9c50b12080d1f4d69a0de&code=${reqToken}`, {}, {
+        await axios.post(`https://getpocket.com/v3/oauth/authorize?consumer_key=104112-346f4c78b76e2ef1fb2bc80&code=${reqToken}`, {}, {
             headers: {
                 "Content-Type": "application/json; charset=UTF-8",
                 "X-Accept": "application/json",
@@ -68,9 +68,8 @@ recordRoutes.route('/retrieve').get((req, res) => {
     let username = req.query.username;
     console.log(access_tok);
     console.log(username);
-    console.log("Baby I'm here");
     async function retrieve(){
-        await axios.post(`https://getpocket.com/v3/get?consumer_key=102894-ac9c50b12080d1f4d69a0de&access_token=${access_tok}&count=10`, {}, {
+        await axios.post(`https://getpocket.com/v3/get?consumer_key=104112-346f4c78b76e2ef1fb2bc80&access_token=${access_tok}&count=10`, {}, {
             headers: {
                 "Content-Type": "application/json; charset=UTF-8",
                 "X-Accept": "application/json",
@@ -83,6 +82,20 @@ recordRoutes.route('/retrieve').get((req, res) => {
         });
     }
     retrieve();
+})
+
+recordRoutes.route('/dothing').post((req, res) => {
+    let access_token = req.body.access_token;
+    const json = req.body.json;
+    console.log("Do thing");
+    console.log(req.body);
+    async function doThing(){
+        await axios.post(`https://getpocket.com/v3/send?actions=${json}&access_token=${access_token}&consumer_key=104112-346f4c78b76e2ef1fb2bc80`
+        ).catch((err) => {
+            console.log(err);
+        })
+    }
+    doThing();
 })
 
 module.exports = recordRoutes;

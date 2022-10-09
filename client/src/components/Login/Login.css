@@ -1,0 +1,64 @@
+@import url('https://fonts.googleapis.com/css2?family=Bilbo&family=Luckiest+Guy&display=swap');
+@import 'bootstrap/dist/css/bootstrap.min.css';
+body, html {
+    height: 100%;
+    margin: 0;
+}
+
+.bg {
+    background-image: url('./akram-huseyn-f3nGngsnp3A-unsplash.jpg');
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center center;
+}
+
+.button {
+    border-style: solid;
+    border-width: 1px;
+    border-radius: 1vw !important;
+    border-color: #F0A500;
+    background-color: #F0A500;
+    color: black;
+    padding: 2% 42%;   
+}
+
+.login-wrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    box-shadow: 10px 10px;
+}
+
+.login-title {
+    font-family: 'Bilbo', cursive;
+    background-color: #FDEEDC;
+    color: #E38B29;
+    padding: 2% 21%;
+    margin: 0;
+    border-style: solid;
+    border-width: 1px;
+    border-radius: 1vw;
+    width: 50%;
+    border-color: #FDEEDC;
+}
+
+.login-form {
+    width: 48%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background-color: #FFD8A9;
+    padding: 5%;
+    border-style: solid;
+    border-width: 1px;
+    border-radius: 1vw;
+    border-color: #FFD8A9;
+}
